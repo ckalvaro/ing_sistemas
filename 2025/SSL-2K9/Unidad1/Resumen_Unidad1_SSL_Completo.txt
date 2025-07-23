@@ -1,0 +1,145 @@
+1. Introducción e historia
+- Antecedentes históricos: desde las primeras máquinas sumadoras de Pascal (1640), pasando por los circuitos de Shannon (1938) hasta las primeras propuestas de formalización de los lenguajes con Gödel (1931) y Turing, Church y Post (1936). En lingüística, Chomsky revolucionó la teoría de las gramáticas en 1956, sentando las bases de los lenguajes formales.
+- Motivación: entender la computación como modelos abstractos permite analizar computabilidad, complejidad, diseño de compiladores, procesamiento de lenguajes naturales y modelado de sistemas.
+
+2. Máquinas abstractas
+- Definición: dispositivos formales (autómatas) que reaccionan a estímulos externos en tiempo discreto, adoptan estados de un alfabeto finito y pueden leer/grabar símbolos en cintas de entrada/salida.
+- Características comunes:
+  - Tiempo discreto, estados finitos.
+  - Función de transición (posible parcialidad) que define siguiente estado, movimiento de cabezal y, si procede, salida.
+  - Dependencia de estado + estímulo para determinar la respuesta.
+- Clasificaciones:
+  - Según propósito: reconocedoras (aceptan/descartan cadenas) vs traductoras (transforman cadenas).
+  - Según memoria: finitos, con pila (LIFO), linealmente acotados, Turing.
+  - Según determinismo: deterministas (un único siguiente estado) vs no deterministas (múltiples, o transiciones ε).
+- Automatismos vs autonomía:
+  - Automatismo: comportamiento completamente prediseñado.
+  - Autonomía: capacidad de modificar dinámicamente su propia función de transición o alfabeto de entrada.
+
+3. Jerarquía de máquinas y lenguajes
+- Jerarquía de Chomsky (gramáticas):
+  1. Tipo 3: regulares
+  2. Tipo 2: independientes de contexto
+  3. Tipo 1: dependientes de contexto
+  4. Tipo 0: sin restricciones.
+- Jerarquía de máquinas (de menor a mayor poder):
+  - Autómata finito → Autómata con pila → Autómata linealmente acotado → Máquina de Turing.
+- Vínculo isomórfico:
+  - Regular ↔ Autómata finito
+  - Independiente de contexto ↔ Autómata con pila
+  - Dependiente de contexto ↔ Autómata linealmente acotado
+  - Sin restricciones ↔ Máquina de Turing.
+
+4. Vínculos y utilidad práctica
+- Compiladores:
+  - El análisis léxico usa AF para reconocer tokens; el sintáctico, AP para validar estructuras; la fase semántica verifica tipos y coherencia.
+- Procesamiento de lenguaje natural: analizadores morfológicos (AF), sintácticos (AP) y semánticos avanzados.
+- Modelado de sistemas: UML (diagramas de estados/ secuencia) refleja máquinas de estados; aplica en diseño de software y sistemas embebidos.
+- Implementación de algoritmos: representar lógica compleja como máquinas finitas mejora claridad, eficiencia y mantenibilidad.
+- Sistemas industriales y embebidos: control de procesos, robots, electrodomésticos, etc., modelados como autómatas finitos.
+- Identificación de patrones y virus: uso de gramáticas y autómatas para detección sintáctica de anomalías o firmas de malware.
+
+5. Conceptos fundamentales de compiladores
+- Definición: transforma programa fuente (alto nivel) en objeto (lenguaje máquina) mediante análisis (léxico, sintáctico, semántico) y síntesis (código intermedio, optimización, código objeto).
+- Componentes del contexto (IDE): editor, preprocesador, compilador (múltiples pasadas), ensamblador, enlazador, gestor de librerías, depurador, librerías dinámicas.
+- Notación T: representa lenguajes Fuente (F), Objeto (O) e Implantación (I) del compilador; ejemplifica encadenamiento de compiladores históricos.
+
+6. Estructura interna de un compilador
+- Análisis
+  1. Léxico (scanner/tokenización)
+  2. Sintáctico (parser LL/LR, validación con AP)
+  3. Semántico (comprobación de tipos, flujo, coherencia)
+- Síntesis
+  4. Generación de código intermedio (3‐direcciones o UNCOL)
+  5. Optimización (bloques críticos, selección de instrucciones)
+  6. Generación de código objeto (asignación de registros, memoria).
+- Tablas de símbolos: almacenan identificadores y atributos; esenciales en todas las fases.
+- Gestión de errores: lexicográficos, sintácticos, semánticos, de ejecución y límites del compilador; estrategias de recuperación (modo pánico, reemplazo, gramática extendida).
+
+Reflexiones críticas y preguntas de profundización
+1. ¿En qué casos podría un autómata finito bidireccional ser insuficiente para reconocer un lenguaje práctico, y cómo justificarías la elección de un autómata con pila?
+2. Dado que la función de transición puede definirse como parcial o total, ¿qué ventajas e inconvenientes trae cada enfoque al diseñar un AFD en un compilador real?
+3. ¿Cómo influye la normalización a UNCOL en la rapidez de desarrollo de nuevos compiladores y en su mantenibilidad?
+4. ¿Hasta qué punto la fase de optimización persigue criterios contradictorios (tamaño vs. velocidad) y cómo priorizarías en un sistema embebido?
+
+
+1. Compiladores e intérpretes
+
+1.1 Definición y rol en el desarrollo de software
+Un compilador es la herramienta que traduce un programa escrito en un lenguaje de alto nivel (fuente) a otro de bajo nivel (objeto o máquina), efectuando no solo una traducción literal, sino un análisis semántico para preservar la lógica del programa.
+Un intérprete, en cambio, lee el programa fuente (o un código intermedio) y ejecuta sus instrucciones directamente, sin generar un ejecutable separado.
+
+1.2 Flujo de un compilador clásico
+1. Preprocesador: expande macros, #include, etc.
+2. Análisis léxico: tokeniza el código (id, numero, operador).
+3. Análisis sintáctico: construye el árbol sintáctico (parser LL/LR)
+4. Análisis semántico: verifica tipos, declaraciones, alcance.
+5. Generación de código intermedio: por ejemplo, tres direcciones.
+6. Optimización: reducción de código redundante, asignación de registros.
+7. Generación de código objeto y enlazado con librerías.
+
+Ejemplo:
+- Un compilador de C (gcc) traduce sum = a + b; en varias instrucciones en ensamblador, optimiza variables en registros y produce un .exe.
+- Un intérprete de Python (CPython) lee línea por línea, compila a un bytecode interno y lo ejecuta en la máquina virtual sin archivo ejecutable.
+
+1.3 Compilador-intérprete híbrido
+El compilador de Java genera bytecode (código intermedio), que luego la JVM interpreta (o “JIT-compila”) en tiempo de ejecución, logrando portabilidad total.
+
+1.4 Ventajas y desventajas
+Característica      | Compilador                    | Intérprete
+--------------------|-------------------------------|-----------------------------------
+Tiempo de arranque  | Más lento (compilación)       | Instantáneo
+Rendimiento         | Alto (código nativo)          | Menor (interpretado)
+Depuración          | Menos interactiva             | Muy interactiva (línea a línea)
+Portabilidad        | Depende de la plataforma      | Alta (solo requiere intérprete)
+
+2. Gramáticas formales
+
+2.1 Concepto
+Una gramática formal es un conjunto de reglas de producción que define lenguajes formales (cadenas válidas sobre un alfabeto), a diferencia de los lenguajes naturales, que admiten excepciones y ambigüedades.
+
+2.2 Tipos de gramáticas (Chomsky)
+
+Chomsky clasificó las gramáticas según la forma de sus producciones:
+
+Tipo 0 (gramáticas sin restricciones):
+– Reglas de la forma α→β, sin limitación (α, β cadenas no vacías de terminales y no terminales).
+– Generan lenguajes recursivamente enumerables.
+
+Tipo 1 (gramáticas dependientes de contexto):
+– Reglas αAβ→αγβ, donde A es no terminal y α, β, γ cadenas de terminales/no terminales, con γ≠ε.
+– Generan lenguajes dependientes de contexto.
+
+Tipo 2 (gramáticas independientes de contexto):
+– Reglas A→γ, donde A es no terminal y γ cualquier cadena.
+– Generan lenguajes independientes de contexto (útiles para sintaxis de lenguajes de programación).
+
+Tipo 3 (gramáticas regulares):
+– Reglas A→aB o A→a (a terminal, B no terminal).
+– Generan lenguajes regulares (tokens, expresiones regulares).
+
+Ejemplo de gramática libre de contexto (Tipo 2) para expresiones aritméticas simples:
+E → E + T | T
+T → T * F | F
+F → ( E ) | id
+
+3. Jerarquía de Chomsky
+
+3.1 Descripción
+La jerarquía de Chomsky ordena los tipos de gramáticas y sus respectivos autómatas reconocedores:
+
+Tipo Chomsky | Gramática                        | Autómata reconocedor              | Clase de lenguajes                   
+-------------|----------------------------------|-----------------------------------|--------------------------------------
+Tipo 3       | Regulares                        | Autómata finito determinista      | Lenguajes regulares (exp. reg.)      
+Tipo 2       | Independientes de contexto       | Autómata con pila                 | Lenguajes CFL (pila LIFO)            
+Tipo 1       | Dependientes de contexto         | Autómata linealmente acotado      | Lenguajes sens. al contexto          
+Tipo 0       | Sin restricciones                | Máquina de Turing                 | Lenguajes rec. enumerables           
+
+Ejemplo práctico:
+- El lenguaje { aⁿ bⁿ | n≥0 } no es regular, pero sí es CFL:
+  S → a S b | ε
+
+3.2 Vínculo isomórfico
+Existe un isomorfismo entre cada nivel de gramáticas y su máquina correspondiente:
+- Las gramáticas regulares generan exactamente los lenguajes reconocidos por autómatas finitos.
+- Las gramáticas independientes de contexto se corresponden con autómatas con pila, etc.

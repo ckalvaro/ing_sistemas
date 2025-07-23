@@ -1,0 +1,64 @@
+Unidad 2: Gramáticas y Lenguajes Formales – Resumen Completo
+
+1. Alfabetos, Palabras y Lenguajes
+- Alfabetos: Conjuntos finitos de símbolos (Σ). Operaciones: unión, intersección, complemento, concatenación, potenciación y clausura (Σ*, Σ+).
+- Palabras: Secuencias finitas de símbolos (ω ∈ Σ*). Longitud |ω|; palabra vacía λ; prefijos, sufijos y subpalabras; inversión (ω⁻¹).
+- Lenguajes: Subconjuntos de Σ*. Operaciones: unión L1∪L2, intersección L1∩L2, resta L1−L2, concatenación L1·L2, potencia L^n, cierres L*, L+.
+
+Ejercicios recomendados:
+1. Dado Σ={a,b,c}, listar por extensión Σ2, Σ3 y Σ* hasta longitud 3.
+2. Para ω="abracadabra": calcular prefijos, sufijos propios y subpalabras intermedias.
+3. Definir por comprensión L = {ω ∈ {0,1}* | ω empieza y termina con 1}.
+4. Operar L1={a^n b^n | n≥1} y L2={b^m a^m | m≥1}: hallar L1∪L2, L1·L2, L1*.
+
+2. Gramáticas Formales y Derivaciones
+- Gramática G=(ΣT, ΣN, S, P): terminales ΣT, no terminales ΣN, axioma S, producciones P (α→β, α∈(ΣT∪ΣN)*ΣN(ΣT∪ΣN)*).
+- Derivación: Secuencia de aplicaciones directas (→) y reducciones (←). Derivación S⇒*ω define ω∈L(G).
+- Árbol de derivación: Representación gráfica; nodos internos no terminales, hojas terminales en orden.
+- Ambigüedad: Una cadena admite más de un árbol. Gramática/Lenguaje ambiguo.
+
+Ejercicios recomendados:
+1. Dada G con S→S+S | S*S | (S) | num, construir árboles para "num+num*num" y " (num)".
+2. Para G: <decl>→<tipo>_<id>;..., derivar "entero_a1;" por izquierda y por derecha, y comparar árboles.
+3. Identificar cadenas ambiguas en gramática de expresiones y explicar ambigüedad.
+4. Diseñar gramática sin ambigüedad para suma y multiplicación con precedencia.
+
+3. Jerarquía de Chomsky
+- Tipos de gramáticas:
+  • Tipo 0 (recursivamente enumerables): αAβ→γ.
+  • Tipo 1 (sensibles al contexto): αAβ→αγβ, S→λ.
+  • Tipo 2 (libre de contexto): A→α, S→λ.
+  • Tipo 3 (regulares): A→aB | a | λ.
+- Relación con autómatas: Finito ↔ regulares; Pila ↔ libres de contexto; Lineal ↔ sensibles al contexto; Turing ↔ tipo 0.
+
+Ejercicios recomendados:
+1. Clasificar producciones de una gramática dada según tipo.
+2. Dada L={a^n b^n c^n | n≥1}, justificar su lugar en la jerarquía.
+3. Escribir gramática tipo 2 para L={a^n b^n | n≥0}.
+4. Demostrar que L={a^n b^n c^n} no es CFL.
+
+4. Lenguajes Regulares y Expresiones Regulares
+- Gramáticas regulares (tipo 3) y su equivalencia con expresiones regulares.
+- Operadores: ∅, λ, símbolo, concatenación, unión (+), estrella (*).
+- Ejemplos: (01+1)* genera Σ* sin ceros consecutivos.
+- Uso en análisis léxico (tokens) y herramientas (grep, lex).
+
+Ejercicios recomendados:
+1. Dada ER=(0+1)*11(0+1)*, generar 5 cadenas y explicar el patrón.
+2. Convertir la expresión regular (a+b)*abb(a+b)* en una gramática tipo 3.
+3. Diseñar ER para identificadores que empiecen con letra y sigan con letras/dígitos.
+4. Construir ER que acepte números binarios sin ceros a la izquierda.
+
+5. Gramáticas Independientes del Contexto – Normalizaciones
+- Limpieza de gramáticas: eliminar reglas inútiles, símbolos inaccesibles y superfluos.
+- Bien formada: además sin reglas λ (salvo S→λ) ni de redenominación A→B.
+- Eliminación de recursión izquierda y factorización por izquierda.
+- Formas normales:
+  • Chomsky (FNC): A→BC | a | S→λ.
+  • Greibach (FNG): A→aα, S→λ.
+
+Ejercicios recomendados:
+1. Tomar G con recursión izquierda y aplicar técnica para eliminarla.
+2. Factorizar producciones A→abX | abY | cZ.
+3. Convertir G a FNC y derivar "abba" antes y después.
+4. Transformar G a FNG y verificar que genere el mismo lenguaje.
